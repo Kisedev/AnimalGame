@@ -1,5 +1,15 @@
 extends layout
-
+append head
+  link(rel='stylesheet' href='stylesheets/home.css')
 block content
-  h1= title
-  p Welcome to #{title}
+  .jumbotron.jumbotron-fluid.px-4.bg-transparent
+    p.lead
+      a.btn.btn-primary(href='/apostas' role='button') Gerar Aposta
+    hr.bg-light
+    p.lead
+      a.btn.btn-success(href='/resultados' role='button') Últimos Resultados
+    hr.bg-light
+    
+  p.text-left
+    a.btn.btn-outline-info(href='/como_jogar' role='button') Como Jogar?
+

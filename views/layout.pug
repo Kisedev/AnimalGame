@@ -1,7 +1,38 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    block head
+      title= title
+      meta(charset='utf-8')
+      meta(name='viewport' content='width=device-width initial-scale=1')
+      link(rel='stylesheet' href='/css/bootstrap.min.css')
+      link(rel='stylesheet' href='/stylesheets/style.css')
+
+body
+  .container-fluid.main-container.d-flex.w-100.h-100.mx-auto.flex-column
+    header
+      block header
+        nav.navbar.navbar-dark
+          a.navbar-brand.h1.mb-0(href='/')= title
+          button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navTop' aria-control='navTop' aria-expanded='false' aria-label='Conta do Usuário')
+            span.navbar-toggler-icon
+
+          #navTop.collapse.navbar-collapse
+            ul.navbar-nav.mr-auto
+              li.nav-item.active
+                a.nav-link(href='/') Home
+              li.nav-item
+                a.nav-link(href='#') Minha Conta
+              li.nav-item
+                a.nav-link(href='#') Banca Favorita
+              li.nav-item
+                a.nav-link(href='#') Comparar Jogos
+    main(role='main')
+      block content
+
+    block scripts
+      script(src='/jquery.slim.min.js')
+      script(src='/js/bootstrap.bundle.min.js')
+    footer
+      .inner.p-2
+        p.text-muted.text-center.m-0 Desenvolvido por #[a.text-light(href="https://github.com/Kisedev") Kise]

@@ -1,0 +1,24 @@
+html,
+body {
+  height: 100%;
+  background-color: var(--dark);
+}
+.main-container {
+  max-width: 42em;
+}
+body {
+  display: -ms-flexbox;
+  display: flex;
+  color: var(--white);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+}
+header {
+  margin-bottom: auto !important;
+}
+main {
+
+  text-align: center !important;
+}
+footer {
+  margin-top: auto !important;
+}
