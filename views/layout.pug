@@ -17,7 +17,7 @@ body
     header
       block header
         nav.navbar.navbar-dark
-          a.navbar-brand.h1.mb-0(href='/')= title
+          a.navbar-brand.h1.mb-0(href='/') Capital do Bicho
           button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navTop' aria-control='navTop' aria-expanded='false' aria-label='Conta do Usuário')
             span.navbar-toggler-icon
 
@@ -29,7 +29,7 @@ body
                 a.nav-link(href='#') Minha Conta
               li.nav-item
                 a.nav-link(href='#') Banca Favorita
-    main(role='main')
+    main(role='main').container-fluid
       block content
 
     block scripts

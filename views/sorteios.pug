@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    .my-3.p-3.bg-light.rounded.shadow-sm
+        h5.mb-2 Últimos Resultados
+            .row.no-gutters.row-cols-1.row-cols-sm-2.row-cols-lg-3.row-cols-xl-4
+                each sorteio in resultados
+                    .col.px-2.mb-3
+                        .card.text-center.mt-3
+                            .card-header.border-bottom.border-gray
+                                h6.card-title= sorteio.banca
+                                h5.card-subtitle= sorteio.extracao
+                            .card-body.p-0
+                                ol.list-group.list-group-flush.premios
+                                    li.list-group-item.d-flex.align-items-center.justify-content-between
+                                        p.milhar= sorteio.resultado[0]
+                                        .grupo
+                                            button.btn.btn-outline-info.btn-sm.text-dark(type='button') Grupo
+                                                span.badge.badge-light.grupo-num= sorteio.resultado[1]
+                                            img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo'+sorteio.resultado[1])
+                                a.btn.btn-primary.btn-sm.my-2(href='/sorteios/'+sorteio.banca_urn) Ver Banca
+                            .card-footer.px-2.py-1.text-muted.small= sorteio.data
+
+
