@@ -4,12 +4,18 @@ append head
 block content
   .jumbotron.jumbotron-fluid.px-4.bg-transparent
     p.lead
-      a.btn.btn-primary.btn-lg.disabled(href='/apostas' role='button' aria-disabled='true') Gerar Aposta
+      a.btn.btn-primary.btn-lg.disabled(href='/apostas' role='button' aria-disabled='true')
+        span.fas.fa-marker.mr-2
+        | Gerar Aposta
     hr.bg-light
     p.lead
-      a.btn.btn-success.btn-lg(href='/resultados' role='button') Últimos Resultados
+      a.btn.btn-success.btn-lg(href='/resultados' role='button')
+        span.fas.fa-receipt.mr-2
+        | Últimos Resultados
     hr.bg-light
     p.text-left.mt-5
-      a.btn.btn-outline-info.btn-sm(href='/como_jogar' role='button') Como Jogar?
+      a.btn.btn-outline-info.btn-sm.p-2(href='/como_jogar' role='button')
+        span.fas.fa-question-circle.mr-1
+        | Como Jogar
     
 

@@ -5,7 +5,11 @@ html
       title= title
       meta(charset='utf-8')
       meta(name='viewport' content='width=device-width initial-scale=1')
+      //- font-awesome
+      link(rel='stylesheet' href='/css/all.css')
+      //- bootstrap
       link(rel='stylesheet' href='/css/bootstrap.min.css')
+      //- template styles
       link(rel='stylesheet' href='/stylesheets/style.css')
 
 body
@@ -25,14 +29,17 @@ body
                 a.nav-link(href='#') Minha Conta
               li.nav-item
                 a.nav-link(href='#') Banca Favorita
-              li.nav-item
-                a.nav-link(href='#') Comparar Jogos
     main(role='main')
       block content
 
     block scripts
+      //- jquery
       script(src='/jquery.slim.min.js')
+      //- popperjs and bootstrapjs
       script(src='/js/bootstrap.bundle.min.js')
     footer
       .inner.p-2
-        p.text-muted.text-center.m-0 Desenvolvido por #[a.text-light(href="https://github.com/Kisedev") Kise]
+        p.text-muted.text-center.m-0 Desenvolvido por 
+          a.text-light(href="https://github.com/Kisedev")
+            i.fab.fa-github.mr-1
+            | Kise
