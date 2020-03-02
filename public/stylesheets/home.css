@@ -16,8 +16,10 @@ header {
   margin-bottom: auto !important;
 }
 main {
-
   text-align: center !important;
+}
+p.lead .btn {
+    width: 220px;
 }
 footer {
   margin-top: auto !important;
