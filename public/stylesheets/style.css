@@ -3,30 +3,30 @@ footer {
   background-color: var(--dark);
 }
 .main-container {
-    padding: 0;
+  padding: 0;
 }
 .premios {
-    counter-reset: milhar;
-    list-style-type: none;
+  counter-reset: milhar;
+  list-style-type: none;
 }
 .milhar::before {
-    counter-increment: milhar;
-    content: counters(milhar, ".") "º";
-    font-weight: 300;
-    margin-right: .5rem;
+  counter-increment: milhar;
+  content: counters(milhar, ".") "º";
+  font-weight: 300;
+  margin-right: 0.5rem;
 }
 .milhar {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0;
 }
 .grupo {
-    font-size: .9rem;
+  font-size: 0.9rem;
 }
 .grupo-num {
-    font-size: 1em;
-    margin-left: .25rem;
+  font-size: 1em;
+  margin-left: 0.25rem;
 }
 .grupo-img {
-    margin-left: .5rem;
+  margin-left: 0.25rem;
 }

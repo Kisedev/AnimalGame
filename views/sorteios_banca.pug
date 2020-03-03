@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    section.jumbotron.text-center.mb-0
+
+        h2= banca
+        p.h3= data
+        p
+            a.btn.btn-primary.my-2(href='#') Escolher Data
+    if resultados.length > 0
+        .container
+            .extracoes.py-5.bg-light.mt-n5.rounded-lg
+                .row.no-gutters.justify-content-around.row-cols-1.row-cols-sm-2.row-cols-lg-3
+                    each sorteio in resultados
+                        .col.px-1.mb-3
+                            .card.text-center.mt-3
+                                .card-header.border-bottom.border-gray
+                                    h6.card-title= sorteio.banca
+                                    h5.card-subtitle= sorteio.extracao
+                                .card-body.p-0
+                                    ol.list-group.list-group-flush.premios
+                                        each milhar in sorteio.resultados
+                                            li.list-group-item.d-flex.align-items-center.justify-content-between
+                                                p.milhar.border.border-success.p-2.rounded-lg= milhar[0]
+                                                .grupo
+                                                    button.btn.btn-outline-info.btn-sm.text-dark(type='button') Grupo
+                                                        span.badge.badge-light.grupo-num= milhar[1]
+                                                    img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo'+milhar[1])
+    else
+        p.lead.text-center Não foram encontrados resultados para esta data.
