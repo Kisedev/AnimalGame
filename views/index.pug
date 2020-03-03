@@ -4,9 +4,10 @@ append head
 block content
   .jumbotron.jumbotron-fluid.px-4.bg-transparent
     p.lead
-      a.btn.btn-primary.btn-lg.disabled(href='/apostas' role='button' aria-disabled='true')
-        span.fas.fa-marker.mr-2
-        | Gerar Aposta
+      span.d-inline-block(tabindex='0' data-toggle="popover" data-content="Em Breve")
+        a.btn.btn-primary.btn-lg.disabled(href='#' role='button' aria-disabled='true')
+          span.fas.fa-marker.mr-2
+          | Gerar Aposta
     hr.bg-light
     p.lead
       a.btn.btn-success.btn-lg(href='/resultados' role='button')
@@ -17,6 +18,8 @@ block content
       a.btn.btn-outline-info.btn-sm.p-2(href='/como_jogar' role='button')
         span.fas.fa-question-circle.mr-1
         | Como Jogar
+append scripts
+  script(src='/javascripts/main.js')
 block footer
   footer
     .inner.p-2
@@ -24,5 +27,3 @@ block footer
         a.text-light(href="https://github.com/Kisedev")
           i.fab.fa-github.mr-1
           | Kise
-
-

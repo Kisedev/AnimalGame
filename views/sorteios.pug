@@ -15,10 +15,12 @@ block content
                                     li.list-group-item.d-flex.align-items-center.justify-content-between
                                         p.milhar= sorteio.resultado[0]
                                         .grupo
-                                            button.btn.btn-outline-info.btn-sm.text-dark(type='button') Grupo
+                                            a.btn.btn-outline-info.btn-sm.text-dark(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title=sorteio.resultado[1] data-content="N1/N2/N3/N4") Grupo
                                                 span.badge.badge-light.grupo-num= sorteio.resultado[1]
                                             img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo'+sorteio.resultado[1])
-                                a.btn.btn-primary.btn-sm.my-2(href='/resultados/'+sorteio.banca_urn) Ver Banca
+                                a.btn.btn-primary.btn-sm.my-2.mr-2(href='/resultados/'+sorteio.banca_urn) Abrir Resultado
+                                a.btn.btn-secondary.btn-sm.my-2(href='/resultados/'+sorteio.banca_urn) Ver Banca
                             .card-footer.px-2.py-1.text-muted.small= sorteio.data
-
+append scripts
+    script(src='/javascripts/main.js')
 
