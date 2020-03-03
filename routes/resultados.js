@@ -17,9 +17,17 @@ router.get("/", async function(req, res, next) {
 });
 
 router.get("/:banca", function(req, res, next) {
-  let data = new Date();
-  data = moment(data).format("DD_MM_YYYY");
-  res.send(data);
+  let dataHoje = new Date();
+  dataHoje = moment(dataHoje).format("DD_MM_YYYY");
+  Scraper(req.params.banca, dataHoje, (erro, resultados_hoje) => {
+    if (erro) {
+      return next(erro);
+    }
+    res.render("sorteios_banca", {
+      title: ":: Hoje ::",
+      resultados: resultados_hoje
+    });
+  });
 });
 
 router.get("/:banca/:dia", function(req, res, next) {
