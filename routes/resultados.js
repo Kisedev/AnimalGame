@@ -17,18 +17,16 @@ router.get("/", async function(req, res, next) {
 });
 
 router.get("/:banca", function(req, res, next) {
-  let dataHoje = new Date();
-  dataHoje = moment(dataHoje).format("DD_MM_YYYY");
   Scraper(req.params.banca, dataHoje, (erro, resultados_hoje) => {
     if (erro) {
       return next(erro);
     }
-    let data = dataHoje.split('_').join("/");
+    let banca = resultados_hoje.length > 0 ? resultados_hoje[0].banca : req.params.banca;
     res.render("sorteios_banca", {
       title: ":: Hoje ::",
-      data: data,
-      banca: resultados_hoje[0].banca,
-      resultados: resultados_hoje
+      data: resultados_hoje.data,
+      banca: banca,
+      resultados: resultados_hoje.extracoes
     });
   });
 });
@@ -38,11 +36,11 @@ router.get("/:banca/:dia", function(req, res, next) {
     if (erro) {
       return next(erro);
     }
-    let data = req.params.dia.split('_').join("/");
+    let banca = resultados_dia.length > 0 ? resultados_hoje[0].banca : req.params.banca;
     res.render("sorteios_banca", {
       title: `:: ${data} ::`,
-      data: data,
-      banca: resultados_dia[0].banca,
+      data: resultados_dia.data,
+      banca: banca,
       resultados: resultados_dia
     });
   });
