@@ -8,4 +8,8 @@ const BancaSchema = new Schema({
   sorteios: [{ type: Schema.Types.ObjectId, ref: "Sorteio" }]
 });
 
+BancaSchema.virtual('hora').get(function() {
+  return `Próxima Extração`;
+})
+
 module.exports = mongoose.model("Banca", BancaSchema);

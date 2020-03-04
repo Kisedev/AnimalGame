@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ApostaSchema = new Schema({
+const SorteioSchema = new Schema({
   banca: { type: Schema.Types.ObjectId, ref: 'Banca', required: true },
-  premios: [String],
-  data: { type: Date, required: true },
+  data: { type: Date, required: true, default: Date.now },
+  extracao: { type: Schema.Types.ObjectId, ref:'Extracao', required: true },
+  premios: [String]
 });
 
-BancaSchema.virtual('hora').get(function() {
-    return `Horario do resultado previsto || urn resultado`;
+SorteioSchema.virtual('uri').get(function() {
+  return `/resultado/${this._id}`
 })
 
-ApostaSchema.virtual('pre')
+module.exports = mongoose.model('Sorteio', SorteioSchema);
