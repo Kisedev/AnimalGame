@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const moment = require("moment");
-const Scraper = require("../middlewares/resultsScraper/main");
+const Scraper = require("../middlewares/resultsScraper/core");
 
 router.get("/", async function(req, res, next) {
   Scraper(null, null, (erro, ultimos_resultados) => {
@@ -17,11 +17,11 @@ router.get("/", async function(req, res, next) {
 });
 
 router.get("/:banca", function(req, res, next) {
-  Scraper(req.params.banca, dataHoje, (erro, resultados_hoje) => {
+  Scraper(req.params.banca, null, (erro, resultados_hoje) => {
     if (erro) {
       return next(erro);
     }
-    let banca = resultados_hoje.length > 0 ? resultados_hoje[0].banca : req.params.banca;
+    let banca = resultados_hoje.extracoes.length > 0 ? resultados_hoje.extracoes[0].banca : req.params.banca;
     res.render("sorteios_banca", {
       title: ":: Hoje ::",
       data: resultados_hoje.data,

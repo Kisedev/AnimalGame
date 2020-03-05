@@ -19,9 +19,32 @@ block content
                                                 span.badge.badge-light.grupo-num= sorteio.resultado[1]
                                             img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo'+sorteio.resultado[1])
                                 .btn-group.my-2(role="group" aria-label="resultado opções")
-                                    a.btn.btn-success.btn-sm(href='/resultados/'+sorteio.banca_urn) Abrir Resultado
-                                    a.btn.btn-secondary.btn-sm(href='/resultados/'+sorteio.banca_urn) Ver Banca
+                                    a.btn.btn-secondary.btn-sm(href='/resultados/'+sorteio.banca_urn)
+                                        span.fas.fa-store.mr-2
+                                        | Banca
+                                    btn.btn.btn-success.btn-sm(data-toggle="modal" data-target="#modalExtracao")
+                                        span.fas.fa-eye.mr-2
+                                        | Resultado
                             .card-footer.px-2.py-1.text-muted.small= sorteio.data
+        #modalExtracao.modal.fade(tabindex='-1' role='dialog' aria-labelledby='modalExtracaoInfo' aria-hidden='true')
+            .modal-dialog.modal-dialog-centered.modal-dialog-scrollable(role='document')
+                .modal-content
+                    .modal-header
+                        h5#modalExtracaoInfo.modal-title Banca - Extração
+                        button.close(type='button' data-dismiss='modal' aria-label='Fechar')
+                            span(area-hidden='true') &times
+                    .modal-body.p-0
+                        ol.list-group.list-group-flush.premios
+                            li.list-group-item.d-flex.align-items-center.justify-content-around
+                                p.milhar.border.border-success.p-2.rounded-lg 1234
+                                .grupo
+                                    a.btn.btn-outline-secondary.btn-sm.text-dark(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title='Cobra' data-content="33-34-35-36") Grupo
+                                        span.badge.badge-light.grupo-num 09
+                                    img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo 09')
+                    .modal-footer
+                        button.btn.btn-primary(role='button') Imprimir
+                        button.btn.btn-secondary(role='button' data-dismiss='modal') Fechar
+
 append scripts
     script(src='/javascripts/main.js')
 
