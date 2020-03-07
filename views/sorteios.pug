@@ -13,16 +13,16 @@ block content
                             .card-body.p-0
                                 ol.list-group.list-group-flush.premios
                                     li.list-group-item.d-flex.align-items-center.justify-content-between
-                                        p.milhar= sorteio.resultado[0]
+                                        p.milhar= sorteio.resultados[0][0]
                                         .grupo
-                                            a.btn.btn-outline-secondary.btn-sm.text-dark(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title=sorteio.resultado[1] data-content="N1-N2-N3-N4") Grupo
-                                                span.badge.badge-light.grupo-num= sorteio.resultado[1]
-                                            img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo'+sorteio.resultado[1])
+                                            a.btn.btn-outline-secondary.btn-sm.text-dark(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title=sorteio.resultados[0][1] data-content="N1-N2-N3-N4") Grupo
+                                                span.badge.badge-light.grupo-num= sorteio.resultados[0][1]
+                                            img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo '+sorteio.resultados[0][1])
                                 .btn-group.my-2(role="group" aria-label="resultado opções")
-                                    a.btn.btn-secondary.btn-sm(href='/resultados/'+sorteio.banca_urn)
+                                    a.btn.btn-secondary(href='/resultados/'+sorteio.banca_urn)
                                         span.fas.fa-store.mr-2
                                         | Banca
-                                    btn.btn.btn-success.btn-sm(data-toggle="modal" data-target="#modalExtracao")
+                                    btn.btn.btn-success(data-toggle="modal" data-target="#modalExtracao")
                                         span.fas.fa-eye.mr-2
                                         | Resultado
                             .card-footer.px-2.py-1.text-muted.small= sorteio.data

@@ -1,20 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
+const sorteiosCntl = require('../controllers/sorteiosController');
+
 const moment = require("moment");
 const Scraper = require("../middlewares/resultsScraper/core");
 
-router.get("/", async function(req, res, next) {
-  Scraper(null, null, (erro, ultimos_resultados) => {
-    if (erro) {
-      return next(erro);
-    }
-    res.render("sorteios", {
-      title: ":: Últimos Resultados ::",
-      resultados: ultimos_resultados
-    });
-  });
-});
+router.get("/", sorteiosCntl.ultimos_resultados);
 
 router.get("/:banca", function(req, res, next) {
   Scraper(req.params.banca, null, (erro, resultados_hoje) => {
@@ -42,8 +34,8 @@ router.get("/:banca/:dia", function(req, res, next) {
       data: resultados_dia.data,
       banca: banca,
       resultados: resultados_dia
-    });
-  });
-});
+    })
+  })
+})
 
 module.exports = router;
