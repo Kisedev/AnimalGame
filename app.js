@@ -8,6 +8,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const resultadosRouter = require('./routes/resultados');
 
+const resultsScraper = require('./middlewares/scraperMid');
+
 const app = express();
 
 // view engine setup
@@ -22,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 app.use(express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+// route middlewares
+app.use('/resultados', resultsScraper);
 // routes chain
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -15,7 +15,7 @@ router.get("/:banca", function(req, res, next) {
     }
     let banca = resultados_hoje.extracoes.length > 0 ? resultados_hoje.extracoes[0].banca : req.params.banca;
     res.render("sorteios_banca", {
-      title: ":: Hoje ::",
+      title: `Capital do Bicho - ${banca}`,
       data: resultados_hoje.data,
       banca: banca,
       resultados: resultados_hoje.extracoes

@@ -1,10 +1,10 @@
 const fs = require("fs");
-const scraper = require("./resultsScraper/core");
-
+const path = require('path');
+const scraper = require(path.join(__dirname, 'resultsScraper/core'));
 const LOCAL_ultimas_extracoes = JSON.parse(
-  fs.readFileSync("./data/ultimas_extracoes.json", "utf-8")
+  fs.readFileSync(path.join(__dirname, 'data/ultimas_extracoes.json'), "utf-8")
 );
-
+const SCRAPER_ultimas_extracoes = {};
 // Salva e atualiza extracoes localmente para consulta e comparacao
 function salvarFeedxTime(dados) {
   // checa se ha a pasta
@@ -12,7 +12,7 @@ function salvarFeedxTime(dados) {
     fs.mkdirSync("./data");
   }
   fs.writeFileSync(
-    "./data/ultimas_extracoes.json",
+    path.join(__dirname, 'data/ultimas_extracoes.json'),
     JSON.stringify(dados, null, 2)
   );
 }
@@ -63,12 +63,13 @@ function compararExtracoes(dados, dados_local) {
 module.exports = function(req, res, next) {
   scraper({ xTimeFeed: true })
     .then(ultimas_extracoes => {
+      Object.assign(SCRAPER_ultimas_extracoes, ultimas_extracoes);
       let novas_extracoes = compararExtracoes(
-        ultimas_extracoes,
+        SCRAPER_ultimas_extracoes,
         LOCAL_ultimas_extracoes
       );
       // atualiza extracoes local
-      salvarFeedxTime(novas_extracoes);
+      salvarFeedxTime(SCRAPER_ultimas_extracoes);
       return novas_extracoes;
     })
     .then((extracoes) => {

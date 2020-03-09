@@ -2,6 +2,7 @@ const scraper = require("../middlewares/resultsScraper/core");
 const async = require("async");
 
 exports.ultimos_resultados = function(req, res, next) {
+  console.log('Novas Extrações: ', req.extracoes);
   scraper({})
     .then(ultimos_sorteios => {
       async.map(ultimos_sorteios, async sorteio => {
@@ -24,3 +25,11 @@ exports.ultimos_resultados = function(req, res, next) {
     })
     .catch(next);
 };
+
+exports.banca_resultados = function(req, res, next) {
+    scraper({banca: req.params.banca})
+        .then(banca_sorteios => {
+            res.render('')
+        })
+        .catch(next)
+}
