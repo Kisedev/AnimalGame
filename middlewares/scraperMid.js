@@ -60,18 +60,20 @@ function compararExtracoes(dados, dados_local) {
 }
 
 
-(() => {
+module.exports = function(req, res, next) {
   scraper({ xTimeFeed: true })
     .then(ultimas_extracoes => {
       let novas_extracoes = compararExtracoes(
         ultimas_extracoes,
         LOCAL_ultimas_extracoes
       );
-      console.log(novas_extracoes);
+      // atualiza extracoes local
+      salvarFeedxTime(novas_extracoes);
       return novas_extracoes;
     })
-    // .then((extracoes) => {
-    //   passar para req chain do express
-    // })
-    .catch(console.error);
-})();
+    .then((extracoes) => {
+      req.extracoes = extracoes;
+      next();
+    })
+    .catch(console.error)
+}
