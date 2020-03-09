@@ -76,5 +76,5 @@ module.exports = function(req, res, next) {
       req.extracoes = extracoes;
       next();
     })
-    .catch(console.error)
+    .catch(next)
 }
