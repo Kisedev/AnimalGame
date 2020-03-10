@@ -12,6 +12,13 @@ const resultsScraper = require('./middlewares/scraperMid');
 
 const app = express();
 
+// mongodbatlas setup
+const mongoose = require('mongoose');
+const mongoDB = 'mongodb+srv://rw_user:6wAUrfc6MbsVBxx7@kisesp-ui1cx.gcp.mongodb.net/capital_bicho?retryWrites=true&w=majority';
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
