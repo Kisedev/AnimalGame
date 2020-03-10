@@ -2,24 +2,43 @@ const scraper = require("../middlewares/resultsScraper/core");
 const async = require("async");
 const moment = require("moment");
 
-function mapSorteiosxTime(sorteios) {
-  for(let banca in sorteios) {
-    sorteios[banca] = sorteios[banca].map(xTime => {
+function formatExtracoes(sorteios) {
+  let arraySorteios = [];
+  for (let banca in sorteios) {
+    sorteios[banca].forEach(xTime => {
       xTime = xTime.split("E");
-      return [new Date(Number(xTime[0])), xTime[1]];
-    })
+      arraySorteios.push({
+        banca: banca,
+        data: moment(Number(xTime[0])).format("DD_MM_YYYY"),
+        extracao: xTime[1]
+      })
+    });
   }
-  return sorteios;
+  return arraySorteios;
 }
+
 exports.ultimos_resultados = function(req, res, next) {
-  // checa se obj esta vazio
-  if (!(Object.keys(req.extracoes).length === 0 && req.extracoes.constructor === Object)) {
+  // checa se extracoes eh objeto  
+  if (Boolean(req.extracoes) && req.extracoes.constructor === Object) {
     // formata data e extracao
-    console.log(Object.keys(req.extracoes).length + ' Novos sorteios: ');
-    let novosSorteios = mapSorteiosxTime(req.extracoes);
-    console.log(novosSorteios);
+    let novosSorteios = formatExtracoes(req.extracoes);
+    // console.log(novosSorteios.length, ' novos sorteios extraidos');
+    novosSorteios.forEach(sorteio => console.log(sorteio));
+    // scrap resultados novos sorteios
+    async.map(novosSorteios, (sorteio) => {
+      resultado = {};
+      scraper({banca: sorteio.banca, data: sorteio.data, extracao: sorteio.extracao})
+        .then(sorteio => Object.assign(resultado, sorteio))
+      return resultado;
+    }, (erro, novosResultados) => {
+      if(erro) {
+        return next();
+      }
+      console.log(novosResultados);
+    })
+    // tentar pegar novos resultados se n chama proximo mid
   } else {
-    console.log('Sem novos sorteios')
+    console.log("Sem novos sorteios");
   }
   // scraper({})
   //   .then(ultimos_sorteios => {
@@ -45,9 +64,9 @@ exports.ultimos_resultados = function(req, res, next) {
 };
 
 exports.banca_resultados = function(req, res, next) {
-    scraper({banca: req.params.banca})
-        .then(banca_sorteios => {
-            res.render('')
-        })
-        .catch(next)
-}
+  scraper({ banca: req.params.banca })
+    .then(banca_sorteios => {
+      res.render("");
+    })
+    .catch(next);
+};

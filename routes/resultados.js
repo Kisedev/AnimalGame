@@ -3,7 +3,6 @@ const router = express.Router();
 
 const sorteiosCntl = require('../controllers/sorteiosController');
 
-const moment = require("moment");
 const Scraper = require("../middlewares/resultsScraper/core");
 
 router.get("/", sorteiosCntl.ultimos_resultados);

@@ -61,6 +61,7 @@ function compararExtracoes(dados, dados_local) {
 
 
 module.exports = function(req, res, next) {
+  req.extracoes = null;
   scraper({ xTimeFeed: true })
     .then(ultimas_extracoes => {
       Object.assign(SCRAPER_ultimas_extracoes, ultimas_extracoes);
@@ -68,12 +69,12 @@ module.exports = function(req, res, next) {
         SCRAPER_ultimas_extracoes,
         LOCAL_ultimas_extracoes
       );
-      // atualiza extracoes local
-      salvarFeedxTime(SCRAPER_ultimas_extracoes);
-      return novas_extracoes;
-    })
-    .then((extracoes) => {
-      req.extracoes = extracoes;
+
+      if (Object.keys(novas_extracoes).length !== 0) {
+        // atualiza extracoes local
+        salvarFeedxTime(SCRAPER_ultimas_extracoes);
+        req.extracoes = novas_extracoes;
+      }
       next();
     })
     .catch(next)
