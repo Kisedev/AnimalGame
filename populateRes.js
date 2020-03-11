@@ -182,7 +182,7 @@ function criarBancas(cb) {
         adicionarBanca("Bahia", null, "bahia", callback);
       },
       function(callback) {
-        adicionarBanca("Bahia - Maluca", null, "bahia_maluca", callback);
+        adicionarBanca("Maluca - Bahia", null, "bahia_maluca", callback);
       },
       function(callback) {
         adicionarBanca("popular Recife", null, "popular_recife", callback);

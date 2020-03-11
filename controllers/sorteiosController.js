@@ -2,13 +2,17 @@ const scraper = require("../middlewares/resultsScraper/core");
 const async = require("async");
 const moment = require("moment");
 
+const Grupo = require('../models/grupo');
+const Banca = require('../models/banca');
+const Sorteio = require('../models/sorteio');
+
 function formatExtracoes(sorteios) {
   let arraySorteios = [];
   for (let banca in sorteios) {
     sorteios[banca].forEach(xTime => {
       xTime = xTime.split("E");
       arraySorteios.push({
-        banca: banca,
+        banca_urn: banca,
         data: moment(Number(xTime[0])).format("DD_MM_YYYY"),
         extracao: xTime[1]
       })
@@ -22,8 +26,7 @@ exports.ultimos_resultados = function(req, res, next) {
   if (Boolean(req.extracoes) && req.extracoes.constructor === Object) {
     // formata data e extracao
     let novosSorteios = formatExtracoes(req.extracoes);
-    // console.log(novosSorteios.length, ' novos sorteios extraidos');
-    novosSorteios.forEach(sorteio => console.log(sorteio));
+    console.log(novosSorteios.length + ' novos sorteios!');
     // scrap resultados novos sorteios
     async.map(novosSorteios, (sorteio) => {
       resultado = {};
@@ -34,12 +37,14 @@ exports.ultimos_resultados = function(req, res, next) {
       if(erro) {
         return next();
       }
+      // adiciona sorteios no bd
       console.log(novosResultados);
     })
-    // tentar pegar novos resultados se n chama proximo mid
-  } else {
-    console.log("Sem novos sorteios");
   }
+
+  // aqui pede para o banco de dados os 20 ultimos resultados, de acordo com a pagina requisitada
+
+  // scrap ultimos resultados bd 
   // scraper({})
   //   .then(ultimos_sorteios => {
   //     async.map(ultimos_sorteios, async sorteio => {
