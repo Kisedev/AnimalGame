@@ -38,19 +38,46 @@ exports.ultimos_resultados = [
   // adiciona novos sorteios ao bd
   function(req, res, next) {
     if (Boolean(req.sorteios) && req.sorteios.constructor === Array) {
-      // async.each(req.sorteios, (sorteio) => {
-      //   new Sorteio({
-
-      //   })
-      // })
-      console.log(req.sorteios);
+      async.each(req.sorteios, (sorteio, cb) => {
+        Banca.findOne({urn: sorteio.banca_urn}, (erro, banca) => {
+          if(erro) { cb(erro)}
+          new Sorteio({
+            banca: banca._id,
+            data: moment(sorteio.data, 'DD/MM/YYYY').toDate(),
+            extracao: sorteio.extracao,
+            resultado: sorteio.resultado
+          }).save((erro) => {
+            if(erro) {cb(erro)}
+          })
+        })
+      }, (erro) => {
+        if (erro) {
+          return next(erro);
+        }
+        console.log(req.sorteios.length + ' novos sorteios adicionados')
+        next();
+      })
     } else {
       next();
     }
+  },
+  // query ultimos sorteios e render
+  function (req, res, next) {
+    let queryPage = 0;
+    let limit = 10;
+    Sorteio.find({})
+    .sort('-data')
+    .skip(limit*queryPage)
+    .limit(limit)
+    .populate('banca')
+    .exec((erro, ultimos_sorteios) => {
+      if (erro) { return next(erro) }
+      // remapear resultados com numero e nomes grupos
+      res.render('sorteios', {title: ":: Últimos Resultados ::", sorteios: ultimos_sorteios});
+    })
   }
 ];
 
-// res.render('sorteios', {title: ":: Últimos Resultados ::", resultados: ultimas_extracoes});
 
 exports.banca_resultados = function(req, res, next) {
   scraper({ banca: req.params.banca })

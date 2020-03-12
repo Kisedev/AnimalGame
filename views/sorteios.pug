@@ -4,28 +4,28 @@ block content
     .my-3.p-3.bg-light.rounded.shadow-sm
         h5.mb-2 Últimos Resultados
             .row.no-gutters.row-cols-1.row-cols-sm-2.row-cols-lg-3.row-cols-xl-4
-                each sorteio in resultados
+                each sorteio in sorteios
                     .col.px-2.mb-3
                         .card.text-center.mt-3
                             .card-header.border-bottom.border-gray
-                                h6.card-title= sorteio.banca
+                                h6.card-title= sorteio.banca.nome
                                 h5.card-subtitle= sorteio.extracao
                             .card-body.p-0
                                 ol.list-group.list-group-flush.premios
                                     li.list-group-item.d-flex.align-items-center.justify-content-between
-                                        p.milhar= sorteio.resultados[0][0]
+                                        p.milhar= sorteio.resultado[0]
                                         .grupo
-                                            a.btn.btn-outline-secondary.btn-sm.text-dark(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title=sorteio.resultados[0][1] data-content="N1-N2-N3-N4") Grupo
-                                                span.badge.badge-light.grupo-num= sorteio.resultados[0][1]
-                                            img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Grupo '+sorteio.resultados[0][1])
+                                            a.btn.btn-outline-secondary.btn-sm.text-dark(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title='Grupo' data-content="N1-N2-N3-N4") Grupo
+                                                span.badge.badge-light.grupo-num= 0
+                                            img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Animal')
                                 .btn-group.my-2(role="group" aria-label="resultado opções")
-                                    a.btn.btn-secondary(href='/resultados/'+sorteio.banca_urn)
+                                    a.btn.btn-secondary(href='/resultado/'+sorteio.banca.urn)
                                         span.fas.fa-store.mr-2
                                         | Banca
                                     btn.btn.btn-success(data-toggle="modal" data-target="#modalExtracao")
                                         span.fas.fa-eye.mr-2
                                         | Resultado
-                            .card-footer.px-2.py-1.text-muted.small= sorteio.data
+                            .card-footer.px-2.py-1.text-muted.small= sorteio.data_formatada
         #modalExtracao.modal.fade(tabindex='-1' role='dialog' aria-labelledby='modalExtracaoInfo' aria-hidden='true')
             .modal-dialog.modal-dialog-centered.modal-dialog-scrollable(role='document')
                 .modal-content
