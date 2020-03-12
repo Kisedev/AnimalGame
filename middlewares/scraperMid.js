@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const scraper = require(path.join(__dirname, "resultsScraper/core"));
+const moment = require("moment");
+
 const LOCAL_ultimas_extracoes = JSON.parse(
   fs.readFileSync(path.join(__dirname, "data/ultimas_extracoes.json"), "utf-8")
 );
@@ -21,14 +23,18 @@ function salvarFeedxTime(dados) {
 function checaBancasExtracoes(dados, dados_local) {
   let novas_extracoes = {};
   for (let banca_urn in dados) {
-    // se nao tiver a banca urn local adicione com todas extracoes
+    // se nao tiver a banca urn no json local adicione com todas extracoes
     if (!(banca_urn in dados_local)) {
       novas_extracoes[banca_urn] = dados[banca_urn];
       dados_local[banca_urn] = dados[banca_urn];
     } else if (dados[banca_urn].join("") !== dados_local[banca_urn].join("")) {
+      // se extracoes nao corresponderem entao checa se ha novas ocorrencias
       dados[banca_urn].forEach(extracao => {
-        // se nao tiver a extracao na ocorrencia da banca repasse a nova
+        // se nao tiver no local repasse a nova
         if (!dados_local[banca_urn].includes(extracao)) {
+          if (!(banca_urn in novas_extracoes)) {
+            novas_extracoes[banca_urn] = [];
+          }
           novas_extracoes[banca_urn].push(extracao);
         }
       });
@@ -43,12 +49,15 @@ function checaExtracoes(dados, dados_local) {
       dados[banca_urn].forEach(extracao => {
         // se nao tiver a extracao na ocorrencia da banca repasse a nova
         if (!dados_local[banca_urn].includes(extracao)) {
+          if (!(banca_urn in novas_extracoes)) {
+            novas_extracoes[banca_urn] = [];
+          }
           novas_extracoes[banca_urn].push(extracao);
         }
       });
     }
   }
-
+  return novas_extracoes;
 }
 
 // compara e retorna novas extracoes
@@ -67,6 +76,21 @@ function compararExtracoes(dados, dados_local) {
   return novasExtracoes;
 }
 
+function formatExtracoes(sorteios) {
+  let arraySorteios = [];
+  for (let banca_urn in sorteios) {
+    sorteios[banca_urn].forEach(xTime => {
+      xTime = xTime.split("E");
+      arraySorteios.push({
+        banca_urn,
+        data: moment(Number(xTime[0])).format("DD_MM_YYYY"),
+        extracao: xTime[1]
+      });
+    });
+  }
+  return arraySorteios;
+}
+
 module.exports = function(req, res, next) {
   req.extracoes = null;
   scraper({ xTimeFeed: true })
@@ -80,15 +104,19 @@ module.exports = function(req, res, next) {
       if (Object.keys(novas_extracoes).length !== 0) {
         // atualiza extracoes local
         salvarFeedxTime(SCRAPER_ultimas_extracoes);
-        req.extracoes = novas_extracoes;
       }
+      return novas_extracoes;
+    })
+    .then(extracoes => {
+      let extracoes_formatadas = formatExtracoes(extracoes);
+      req.extracoes = extracoes_formatadas;
       next();
     })
-    .catch((erro) => {
+    .catch(erro => {
       console.error(erro);
       next();
-    })
-}
+    });
+};
 
 // scraper({ xTimeFeed: true })
 //   .then(ultimas_extracoes => {
