@@ -27,6 +27,7 @@ exports.ultimos_resultados = [
           }
           // devolve ao req extracoes com resultados
           req.sorteios = novosResultados;
+          console.log('novos resultados', req.sorteios);
           next();
         }
       );
@@ -43,7 +44,7 @@ exports.ultimos_resultados = [
           if(erro) { cb(erro)}
           new Sorteio({
             banca: banca._id,
-            data: moment(sorteio.data, 'DD/MM/YYYY').toDate(),
+            data: new Date(Number(sorteio.data)),
             extracao: sorteio.extracao,
             resultado: sorteio.resultado
           }).save((erro) => {
@@ -67,8 +68,8 @@ exports.ultimos_resultados = [
     let queryPage = 0;
     let limit = 10;
     Sorteio.find({})
-    .sort('-data')
     .skip(limit*queryPage)
+    .sort({data: -1})
     .limit(limit)
     .populate('banca')
     .exec((erro, ultimos_sorteios) => {

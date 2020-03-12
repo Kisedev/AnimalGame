@@ -79,12 +79,12 @@ function compararExtracoes(dados, dados_local) {
 function formatExtracoes(sorteios) {
   let arraySorteios = [];
   for (let banca_urn in sorteios) {
-    sorteios[banca_urn].forEach(xTime => {
-      xTime = xTime.split("E");
+    sorteios[banca_urn].forEach(sorteio => {
+      sorteio = sorteio.split("E");
       arraySorteios.push({
         banca_urn,
-        data: moment(Number(xTime[0])).format("DD_MM_YYYY"),
-        extracao: xTime[1]
+        data: sorteio[0],
+        extracao: sorteio[1]
       });
     });
   }
@@ -92,7 +92,7 @@ function formatExtracoes(sorteios) {
 }
 
 module.exports = function(req, res, next) {
-  scraper({ xTimeFeed: true })
+  scraper({})
     .then(ultimas_extracoes => {
       Object.assign(SCRAPER_ultimas_extracoes, ultimas_extracoes);
       let novas_extracoes = compararExtracoes(
@@ -107,8 +107,7 @@ module.exports = function(req, res, next) {
       return novas_extracoes;
     })
     .then(extracoes => {
-      let extracoes_formatadas = formatExtracoes(extracoes);
-      req.extracoes = extracoes_formatadas;
+      req.extracoes = formatExtracoes(extracoes);
       next();
     })
     .catch(erro => {
