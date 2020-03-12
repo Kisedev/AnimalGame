@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "SET DEBUG=animalgame:* & npm run devstart",
-    "nodestart": "SET DEBUG=animalgame:* & npm run start"
+    "serverstart": "SET DEBUG=animalgame:* & npm run devstart"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
