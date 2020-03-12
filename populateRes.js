@@ -22,7 +22,7 @@ const mongoDB = userArgs[0];
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // referenciar colecoes para uso em outras dependentes
 var grupos = [];
@@ -47,13 +47,11 @@ function adicionarGrupo(numero = 0, nome = "", dezenas = [], cb) {
     cb(null, grupo);
   });
 }
-function adicionarBanca(nome = "", sigla = "", urn = "", cb) {
-  bancaInfo = {
+function adicionarBanca(nome = "", urn = "", cb) {
+  var banca = new Banca({
     nome: capitalize(nome),
     urn
-  };
-  if (sigla) bancaInfo.sigla = sigla.toUpperCase();
-  var banca = new Banca(bancaInfo);
+  });
   banca.save(erro => {
     if (erro) {
       cb(erro);
@@ -153,48 +151,43 @@ function criarBancas(cb) {
   async.series(
     [
       function(callback) {
-        adicionarBanca("federal", null, "federal", callback);
+        adicionarBanca("federal", "federal", callback);
       },
       function(callback) {
-        adicionarBanca("L-BR", null, "l_br", callback);
+        adicionarBanca("L-BR", "l_br", callback);
       },
       function(callback) {
-        adicionarBanca("lotep", "pb", "lotep", callback);
+        adicionarBanca("lotep - PB", "lotep_pb", callback);
       },
       function(callback) {
-        adicionarBanca(
-          "Rio Grande do Sul",
-          null,
-          "rio_grande_do_sul",
-          callback
-        );
+        adicionarBanca("Rio Grande do Sul", "rio_grande_do_sul", callback);
       },
       function(callback) {
-        adicionarBanca("São Paulo", null, "sao_paulo", callback);
+        adicionarBanca("São Paulo", "sao_paulo", callback);
       },
       function(callback) {
-        adicionarBanca("lotece", null, "lotece", callback);
+        adicionarBanca("lotece", "lotece", callback);
       },
       function(callback) {
-        adicionarBanca("look", "go", "look", callback);
+        adicionarBanca("look - GO", "look_go", callback);
       },
       function(callback) {
-        adicionarBanca("Bahia", null, "bahia", callback);
+        adicionarBanca("Bahia", "bahia", callback);
       },
       function(callback) {
-        adicionarBanca("Maluca - Bahia", null, "bahia_maluca", callback);
+        adicionarBanca("Maluca - Bahia", "bahia_maluca", callback);
       },
       function(callback) {
-        adicionarBanca("popular Recife", null, "popular_recife", callback);
+        adicionarBanca("popular Recife", "popular_recife", callback);
       },
       function(callback) {
-        adicionarBanca("loteria Nacional", null, "loteria_nacional", callback);
+        adicionarBanca("loteria Nacional", "loteria_nacional", callback);
       },
       function(callback) {
-        adicionarBanca("Minas Gerais", null, "minas_gerais", callback);
+        adicionarBanca("Minas Gerais", "minas_gerais", callback);
       },
       function(callback) {
-        adicionarBanca("Rio de Janeiro", null, "rio_de_janeiro", callback);
+        adicionarBanca("Rio de Janeiro", "rio_de_janeiro", callback);
       }
     ],
     cb
