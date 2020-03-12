@@ -88,11 +88,10 @@ function formatExtracoes(sorteios) {
       });
     });
   }
-  return arraySorteios;
+  return arraySorteios.length > 0 ? arraySorteios : null;
 }
 
 module.exports = function(req, res, next) {
-  req.extracoes = null;
   scraper({ xTimeFeed: true })
     .then(ultimas_extracoes => {
       Object.assign(SCRAPER_ultimas_extracoes, ultimas_extracoes);

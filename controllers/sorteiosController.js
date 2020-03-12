@@ -58,6 +58,7 @@ exports.ultimos_resultados = [
         next();
       })
     } else {
+      console.log('nenhum sorteio novo')
       next();
     }
   },
