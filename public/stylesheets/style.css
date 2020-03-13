@@ -2,6 +2,21 @@ header,
 footer {
   background-color: var(--dark);
 }
+.brand {
+  position: relative;
+  padding-left: 2.5rem;
+}
+.brand::before {
+  content: "";
+  position: absolute;
+  background-size: 100%;
+  left: 0;
+}
+.navbar-brand::before {
+  width: 2rem;
+  height: 2rem;
+  background-image: url('/images/brand_outline.svg');
+}
 .main-container {
   padding: 0;
 }
@@ -32,4 +47,11 @@ footer {
 }
 .grupo-img {
   margin-left: 0.25rem;
+}
+.note {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+.blockquote-footer {
+  font-size: .8em;
 }

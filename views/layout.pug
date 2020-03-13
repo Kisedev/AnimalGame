@@ -1,3 +1,4 @@
+include includes/iconsRights.pug
 doctype html
 html
   head
@@ -17,7 +18,8 @@ body
     header
       block header
         nav.navbar.navbar-dark
-          a.navbar-brand.h1.mb-0(href='/') Capital do Bicho
+          a(href='/')
+            h1.brand.navbar-brand.m-0 Capital do Bicho
           button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navTop' aria-control='navTop' aria-expanded='false' aria-label='Conta do Usuário')
             span.navbar-toggler-icon
 
@@ -38,3 +40,12 @@ body
       //- popperjs and bootstrapjs
       script(src='/js/bootstrap.bundle.min.js')
     block footer
+      footer.p-2.text-muted
+        .row.justify-content-center
+          blockquote.blockquote.text-center.note
+            p.m-0 Desenvolvido por 
+              a.text-light(href="https://github.com/Kisedev")
+                i.fab.fa-github.mr-1
+                | Kise
+            block rights
+              +footerRights(["Logo"], "Smashicons", "https://www.flaticon.com/authors/smashicons")
