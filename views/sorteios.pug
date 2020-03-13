@@ -7,25 +7,28 @@ block content
                 each sorteio in sorteios
                     .col.px-2.mb-3
                         .card.text-center.mt-3
-                            .card-header.border-bottom.border-gray
-                                h6.card-title= sorteio.banca.nome
-                                h5.card-subtitle= sorteio.extracao
+                            .card-header.px-3.d-flex.align-items-baseline.justify-content-between
+                                h6.card-title.m-0= sorteio.banca.nome
+                                h5.card-subtitle.px-1.border.rounded-lg.border-success= sorteio.extracao
+                                small.text-muted= sorteio.data_formatada
                             .card-body.p-0
-                                ol.list-group.list-group-flush.premios
-                                    li.list-group-item.d-flex.align-items-center.justify-content-between
-                                        p.milhar= sorteio.resultado[0]
+                                ul.list-group.list-group-flush.premios
+                                    li.list-group-item.p-2.d-flex.align-items-center.justify-content-between
+                                        .premio
+                                            span.d-inline-block.px-2.py-1.mr-3.border.text-muted.premio-num 1º
+                                            .d-inline-block.milhar= sorteio.resultado[0]
                                         .grupo
-                                            a.btn.btn-outline-secondary.btn-sm.text-dark(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title='Grupo' data-content="N1-N2-N3-N4") Grupo
-                                                span.badge.badge-light.grupo-num= 0
-                                            img.bd-placeholder-img.rounded.grupo-img.d-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Animal')
-                                .btn-group.my-2(role="group" aria-label="resultado opções")
-                                    a.btn.btn-secondary(href='/resultado/'+sorteio.banca.urn)
+                                            a.px-2.py-1.border.border-secondary.grupo-num(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title='Grupo' data-content="N1-N2-N3-N4") 01
+                                            img.bd-placeholder-img.rounded-left.grupo-img.d-sm-none.d-md-inline-block(src='http://placecorgi.com/42' alt='Animal')
+                            .card-footer.p-2
+                                .btn-group(role="group" aria-label="resultado opções")
+                                    a.btn.btn-sm.btn-outline-secondary(href='/resultado/'+sorteio.banca.urn)
                                         span.fas.fa-store.mr-2
                                         | Banca
-                                    btn.btn.btn-success(data-toggle="modal" data-target="#modalExtracao")
-                                        span.fas.fa-eye.mr-2
+                                    btn.btn.btn-sm.btn-outline-success(data-toggle="modal" data-target="#modalExtracao")
+                                        span.fas.fa-receipt.mr-2
                                         | Resultado
-                            .card-footer.px-2.py-1.text-muted.small= sorteio.data_formatada
+
         #modalExtracao.modal.fade(tabindex='-1' role='dialog' aria-labelledby='modalExtracaoInfo' aria-hidden='true')
             .modal-dialog.modal-dialog-centered.modal-dialog-scrollable(role='document')
                 .modal-content

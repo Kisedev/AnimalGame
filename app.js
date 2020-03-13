@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'node_modules/@fortawesome/fontaweso
 app.use(express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 // route middlewares
-app.use('/resultados', resultsScraper);
+// app.use('/resultados', resultsScraper);
 // routes chain
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

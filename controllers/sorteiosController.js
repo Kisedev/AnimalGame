@@ -27,7 +27,6 @@ exports.ultimos_resultados = [
           }
           // devolve ao req extracoes com resultados
           req.sorteios = novosResultados;
-          console.log('novos resultados', req.sorteios);
           next();
         }
       );
@@ -65,6 +64,7 @@ exports.ultimos_resultados = [
   },
   // query ultimos sorteios e render
   function (req, res, next) {
+    // se nao match para extracao hora entao buscar e fixar em secao diaria 
     let queryPage = 0;
     let limit = 10;
     Sorteio.find({})

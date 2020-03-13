@@ -5,7 +5,10 @@ footer {
 .main-container {
   padding: 0;
 }
-.premios {
+/* .premio-num {
+  font-weight: 300;
+} */
+/* .premios {
   counter-reset: milhar;
   list-style-type: none;
 }
@@ -14,18 +17,18 @@ footer {
   content: counters(milhar, ".") "º";
   font-weight: 300;
   margin-right: 0.5rem;
-}
+} */
 .milhar {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 0;
+  letter-spacing: .2rem;
 }
 .grupo {
   font-size: 0.9rem;
 }
 .grupo-num {
   font-size: 1em;
-  margin-left: 0.25rem;
+  cursor: pointer;
 }
 .grupo-img {
   margin-left: 0.25rem;
