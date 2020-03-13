@@ -2,6 +2,21 @@ header,
 footer {
   background-color: var(--dark);
 }
+.jumbotron-error {
+  position: relative;
+  z-index: -2;
+}
+.error-img {
+  position: absolute;
+  z-index: -1;
+  filter: sepia(40);
+  opacity: 40%;
+  right: 0;
+  max-width: 100%;
+}
+.error-text {
+  font-size: 1rem;
+}
 .brand {
   position: relative;
   padding-left: 2.5rem;

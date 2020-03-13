@@ -1,2 +1,3 @@
 mixin footerRights(icones = [], autor, url)
-    footer.blockquote-footer (#{icones.join(", ")}) made by #[a.text-decoration-none.text-muted(href=url) #[cite(title=autor)= autor]] from #[a.text-decoration-none.text-muted(href="https://www.flaticon.com/" title="Flaticon") www.flaticon.com]
+    - icones = icones.length > 1 ? `(${icones.join(", ")}) icons` : icones.join(" ") + " icon"
+    footer.blockquote-footer #{icones} made by #[a.text-decoration-none.text-muted(href=url) #[cite(title=autor)= autor]] from #[a.text-decoration-none.text-muted(href="https://www.flaticon.com/" title="Flaticon") www.flaticon.com]

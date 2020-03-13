@@ -18,8 +18,8 @@ body
     header
       block header
         nav.navbar.navbar-dark
-          a(href='/')
-            h1.brand.navbar-brand.m-0 Capital do Bicho
+          h1.brand.navbar-brand.m-0 Capital do Bicho
+            a.stretched-link.text-reset(href='/')
           button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navTop' aria-control='navTop' aria-expanded='false' aria-label='Conta do Usuário')
             span.navbar-toggler-icon
 
@@ -41,7 +41,7 @@ body
       script(src='/js/bootstrap.bundle.min.js')
     block footer
       footer.p-2.text-muted
-        .row.justify-content-center
+        .row.no-gutters.justify-content-center
           blockquote.blockquote.text-center.note
             p.m-0 Desenvolvido por 
               a.text-light(href="https://github.com/Kisedev")

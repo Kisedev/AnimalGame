@@ -1,6 +1,15 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  img
+  .jumbotron.jumbotron-error
+    .media.error.text-dark
+      img.error-img(src="/images/brand_mark.svg")
+      .media-body
+        h2= message
+        h3= error.status
+        .media.text-white
+          .media-body
+            pre.error-text.text-wrap.text-break #{error.stack}
+    hr.my-3
+    a.btn.btn-primary.btn-lg(href="/" role="button") Voltar ao Início
