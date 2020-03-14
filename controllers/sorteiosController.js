@@ -38,25 +38,37 @@ exports.ultimos_resultados = [
   // adiciona novos sorteios ao bd
   function(req, res, next) {
     if (Boolean(req.sorteios) && req.sorteios.constructor === Array) {
-      async.each(req.sorteios, (sorteio, cb) => {
-        Banca.findOne({urn: sorteio.banca_urn}, (erro, banca) => {
-          if(erro) { cb(erro)}
-          new Sorteio({
-            banca: banca._id,
+      // async parallel bancas, grupos (lean) > map sorteio banca id > map resultado grupo + async each sorteio save bd
+      async.parallel({
+        bancas: function(callback) {
+          Banca.find({}).lean().exec(callback);
+        },
+        grupos: function(callback) {
+          Grupo.find({}).lean().exec(callback);
+        }
+      }, (erro, resultados) => {
+        if (erro) {return erro}
+        let Sorteios = req.sorteios.map(function(sorteio) {
+          return {
+            // find banca id in bancas
+            banca: resultados.bancas.filter(banca => {return banca.urn === sorteio.banca_urn})[0]._id,
             data: new Date(Number(sorteio.data)),
             extracao: sorteio.extracao,
-            resultado: sorteio.resultado
-          }).save((erro) => {
-            if(erro) {cb(erro)}
-          })
+            // find grupo id in grupos
+            resultado: sorteio.resultado.map(premio => {
+              premio.grupo = resultados.grupos.filter(grupo => {return grupo.numero === premio.grupo})[0]._id
+            })
+          }
         })
-      }, (erro) => {
-        if (erro) {
-          return next(erro);
-        }
-        console.log(req.sorteios.length + ' novos sorteios adicionados')
-        next();
-      })
+        async.each(Sorteios, (sorteio, cb) => {
+          // save in bd
+          new Sorteio(sorteio).save((erro) => { if(erro) {cb(erro)} })
+        }, (erro) => {
+          if(erro) {return next(erro)}
+          console.log(Sorteios.length + ' sorteios adicionados')
+          next();
+        })
+      });
     } else {
       console.log('nenhum sorteio novo')
       next();
@@ -64,18 +76,29 @@ exports.ultimos_resultados = [
   },
   // query ultimos sorteios e render
   function (req, res, next) {
-    // se nao match para extracao hora entao buscar e fixar em secao diaria 
-    let queryPage = 0;
-    let limit = 10;
-    Sorteio.find({})
-    .skip(limit*queryPage)
-    .sort({data: -1})
-    .limit(limit)
-    .populate('banca')
-    .exec((erro, ultimos_sorteios) => {
-      if (erro) { return next(erro) }
-      // remapear resultados com numero e nomes grupos
-      res.render('sorteios', {title: ":: Últimos Resultados ::", sorteios: ultimos_sorteios});
+    async.parallel({
+      grupos: function(callback) {
+        Grupo.find({})
+        .lean({ virtuals: true })
+        .exec(callback);
+      },
+      sorteios: function(callback) {
+        let queryPage = 0;
+        let limit = 10;
+        // se nao match para extracao hora entao buscar e fixar em secao diaria 
+        Sorteio.find({})
+        .lean({ virtuals: true })
+        .sort("-data")
+        .skip(limit*queryPage)
+        .limit(limit)
+        .populate('banca')
+        .exec(callback);
+      }
+    }, (erro, resultados) => {
+      if(erro) {
+        return next(erro)
+      }
+      res.render('sorteios', {title: ":: Últimos Resultados ::", grupos: resultados.grupos, sorteios: resultados.sorteios});
     })
   }
 ];

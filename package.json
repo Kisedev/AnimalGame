@@ -1,11 +1,11 @@
 {
-  "name": "animalgame",
+  "name": "capitalbicho",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "SET DEBUG=animalgame:* & npm run devstart"
+    "serverstart": "SET DEBUG=capitalbicho:* & npm run devstart"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
@@ -19,6 +19,7 @@
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "mongoose": "^5.9.2",
+    "mongoose-lean-virtuals": "^0.6.0",
     "morgan": "~1.9.1",
     "popper.js": "^1.16.1",
     "pug": "^2.0.4"
