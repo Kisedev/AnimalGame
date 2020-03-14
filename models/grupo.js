@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const mongooseLV = require("mongoose-lean-virtuals");
+
 const GrupoSchema = new Schema({
   numero: { type: Number, required: true, min: 1, max: 25 },
   nome: { type: String, required: true, maxlength: 9 },
@@ -17,5 +19,7 @@ GrupoSchema.virtual('dez').get(function() {
         return dezena.toString().padStart(2, "0");
     })
 });
+
+GrupoSchema.plugin(mongooseLV);
 
 module.exports = mongoose.model('Grupo', GrupoSchema);
