@@ -115,18 +115,3 @@ module.exports = function(req, res, next) {
       next();
     });
 };
-
-// scraper({ xTimeFeed: true })
-//   .then(ultimas_extracoes => {
-//     Object.assign(SCRAPER_ultimas_extracoes, ultimas_extracoes);
-//     let novas_extracoes = compararExtracoes(
-//       SCRAPER_ultimas_extracoes,
-//       LOCAL_ultimas_extracoes
-//     );
-//     console.log(novas_extracoes);
-//     if (Object.keys(novas_extracoes).length !== 0) {
-//       // atualiza extracoes local
-//       salvarFeedxTime(SCRAPER_ultimas_extracoes);
-//     }
-//   })
-//   .catch(console.error);
