@@ -1,0 +1,22 @@
+mixin resultado(sorteio, cabeca = false)
+    if cabeca
+        ul.list-group.list-group-flush.premios
+            -let premio = sorteio.resultado[0]; let grupo = premio.grupo; 
+                    li.list-group-item.p-2.d-flex.align-items-center.justify-content-between
+                        .premio
+                            span.d-inline-block.px-2.py-1.mr-3.border.text-muted.premio-num= 1+'º'
+                            .d-inline-block.milhar= premio.milhar
+                        .grupo
+                            a.border.border-secondary.grupo-num(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title=grupo.nome, data-content=grupo.dez.join("-"))= grupo.num
+                            img.bd-placeholder-img.rounded-left.grupo-img.d-sm-none.d-md-inline-block(src='http://placecorgi.com/42' alt=grupo.nome)
+    else
+        ul.list-group.list-group-flush.premios
+            each premio, i in sorteio.resultado
+                -let grupo = premio[i].grupo;
+                    li.list-group-item.p-2.d-flex.align-items-center.justify-content-between
+                        .premio
+                            span.d-inline-block.px-2.py-1.mr-3.border.text-muted.premio-num= (i+1)+'º'
+                            .d-inline-block.milhar= premio[i].milhar
+                        .grupo
+                            a.border.border-secondary.grupo-num(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title=grupo.nome, data-content=grupo.dez.join("-"))= grupo.num
+                            img.bd-placeholder-img.rounded-left.grupo-img.d-sm-none.d-md-inline-block(src='http://placecorgi.com/42' alt=grupo.nome)

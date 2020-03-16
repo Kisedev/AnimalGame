@@ -57,8 +57,10 @@ footer {
   font-size: 0.9rem;
 }
 .grupo-num {
+  padding: .2rem .4rem;
   font-size: 1em;
   cursor: pointer;
+  user-select: none;
 }
 .grupo-img {
   margin-left: 0.25rem;

@@ -1,5 +1,5 @@
 extends layout
-
+include includes/sorteioResultado.pug
 
 block content
     //- remapea resultados com grupos das dezenas
@@ -11,17 +11,10 @@ block content
                         .card.text-center.mt-3
                             .card-header.px-3.d-flex.align-items-baseline.justify-content-between
                                 h6.card-title.m-0= sorteio.banca.nome
-                                h5.card-subtitle.px-1.border.rounded-lg.border-success= sorteio.extracao
+                                h6.card-subtitle.px-1.border.rounded-lg.border-success= sorteio.extracao
                                 small.text-muted= sorteio.data_formatada
                             .card-body.p-0
-                                ul.list-group.list-group-flush.premios
-                                    li.list-group-item.p-2.d-flex.align-items-center.justify-content-between
-                                        .premio
-                                            span.d-inline-block.px-2.py-1.mr-3.border.text-muted.premio-num 1º
-                                            .d-inline-block.milhar= sorteio.resultado[0].milhar
-                                        .grupo
-                                            a.px-2.py-1.border.border-secondary.grupo-num(role='button' tabindex="0" data-toggle="popover" data-trigger="focus" title=sorteio.resultado[0].grupo.nome, data-content=sorteio.resultado[0].grupo.dez.join("-"))= sorteio.resultado[0].grupo.numero
-                                            img.bd-placeholder-img.rounded-left.grupo-img.d-sm-none.d-md-inline-block(src='http://placecorgi.com/42' alt=sorteio.resultado[0].grupo.nome)
+                                +resultado(sorteio, true)
                             .card-footer.p-2
                                 .btn-group(role="group" aria-label="resultado opções")
                                     a.btn.btn-sm.btn-outline-secondary(href='/resultado/'+sorteio.banca.urn)
