@@ -16,7 +16,7 @@
     "express": "~4.16.1",
     "http": "0.0.0",
     "http-errors": "~1.6.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "mongoose": "^5.9.4",
     "mongoose-lean-virtuals": "^0.6.0",
