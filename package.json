@@ -22,7 +22,7 @@
     "mongoose-lean-virtuals": "^0.6.0",
     "morgan": "~1.9.1",
     "popper.js": "^1.16.1",
-    "pug": "^2.0.4"
+    "pug": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2",
